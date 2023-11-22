@@ -3,6 +3,7 @@ package manage;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import utilities.ConfigReader;
@@ -36,6 +37,31 @@ public class DriverManage {
         driver.manage().window().maximize();
 
         System.out.println("****** SetUp Chrome Driver ******");
+
+
+        return  driver;
+    }
+
+
+    public WebDriver setUpFireFoxDriver(){
+
+        capabilities.setPlatform(Platform.ANY);
+        capabilities.setBrowserName(ConfigReader.getProperty("firefoxBrowser"));
+        capabilities.setVersion(ConfigReader.getProperty("firefoxVersion"));
+
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.merge(capabilities);
+
+        try {
+            driver = new RemoteWebDriver(new URL(ConfigReader.getProperty("url")),firefoxOptions);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.manage().window().maximize();
+
+        System.out.println("****** SetUp FireFox Driver ******");
 
 
         return  driver;

@@ -1,5 +1,6 @@
 package tests;
 
+import manage.DriverManage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -12,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Grid_01 {
+    DriverManage driverManage = new DriverManage();
 
     static WebDriver driver;
 
@@ -35,6 +37,29 @@ public class Grid_01 {
 
         driver.get("https://www.wisequarter.com");
 
+        System.out.println(driver.getCurrentUrl());
+        System.out.println(driver.getTitle());
+
+        driver.close();
+    }
+
+    @Test
+    void remoteChromeDriver(){
+        driver = driverManage.setUpChromeDriver();
+
+        driver.get("https://www.youtube.com");
+        System.out.println(driver.getCurrentUrl());
+        System.out.println(driver.getTitle());
+
+        driver.close();
+    }
+
+
+    @Test
+    void remoteFireFoxDriver(){
+        driver = driverManage.setUpFireFoxDriver();
+
+        driver.get("https://www.youtube.com");
         System.out.println(driver.getCurrentUrl());
         System.out.println(driver.getTitle());
 
